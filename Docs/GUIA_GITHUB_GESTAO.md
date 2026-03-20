@@ -3,17 +3,29 @@
 > **Propósito:** Ensinar a equipe a usar GitHub não apenas como repositório de código, mas como ferramenta completa de gestão de projeto.
 
 ### Repositório
-- [ ] Criar repositório com nome descritivo (ex: `biblioteca-fatec` ou `projeto-biblioteca-digital`)
+- [x] Criar repositório com nome descritivo
 - [ ] Adicionar descrição clara
-- [ ] Adicionar todos os 7 membros como colaboradores
+- [ ] Adicionar todos os 6 membros como colaboradores
 - [ ] Tornar privado inicialmente (podem abrir depois se quiserem)
+
+### Estrutura
+- [ ] Criar estrutura de pastas (backend, frontend, docs, database)
+- [ ] Adicionar README.md principal com:
+  - [ ] Descrição do projeto
+  - [ ] Instruções de setup
+  - [ ] Como contribuir
+  - [ ] Links para documentação
+- [ ] Adicionar .gitignore apropriado para stack escolhida
 
 ### Branches
 - [ ] Criar branch `develop` a partir de `main`
+- [ ] Configurar proteções em `main`
+- [ ] Configurar proteções mais leves em `develop`
 - [ ] Definir `develop` como branch padrão para PRs
 
 ### Issues e Projects
-- [ ] Criar issues conforme precise
+- [ ] Criar templates de issues
+- [ ] Criar labels (tipo, componente, prioridade)
 - [ ] Criar projeto Kanban
 - [ ] Configurar colunas do board
 - [ ] Criar milestones para cada fase
@@ -35,7 +47,7 @@
 Vocês vão criar um único repositório monorepo que contém tanto o backend quanto o frontend. A estrutura sugerida é:
 
 ```
-biblioteca-fatec/
+palacioMental/
 ├── README.md                       # Documentação principal
 ├── .gitignore                      # Arquivos a ignorar
 ├── docs/                           # Toda documentação do projeto
@@ -44,22 +56,8 @@ biblioteca-fatec/
 │   ├── ARQUITETURA.md
 │   ├── API_DOCUMENTATION.md
 │   └── USER_RESEARCH.md
-├── backend/                        # Aplicação Java
-│   ├── src/
-│   ├── pom.xml                    # Dependências Maven
-│   └── README.md                  # Instruções de setup do backend
-├── frontend/                       # Aplicação FrontEnd
-│   ├── src/
-│   ├── package.json
-│   └── README.md                  # Instruções de setup do frontend
-├── database/                       # Scripts SQL
-│   ├── migrations/
-│   ├── seeds/
-│   └── diagrams/
-└── .github/                        # Configurações GitHub
-    ├── ISSUE_TEMPLATE/            # Templates de issues
-    ├── PULL_REQUEST_TEMPLATE.md   # Template de PR
-    └── workflows/                 # GitHub Actions (CI/CD)
+(CONTINUAR FAZENDO A PARTIR DAQUI)
+
 ```
 
 ---
@@ -67,8 +65,7 @@ biblioteca-fatec/
 ## 🎫 Sistema de Issues
 
 Issues são tarefas individuais de trabalho. Uma issue pode ser "Implementar endpoint de login", "Criar tela de cadastro", "Corrigir bug na validação de email", etc.
-
-### Anatomia de uma Boa Issue
+### Anatomia de uma Issue
 
 Uma issue bem escrita tem cinco componentes:
 
@@ -79,13 +76,7 @@ Uma issue bem escrita tem cinco componentes:
 **2. Descrição do Problema/Necessidade:**
 Explicar o contexto. Por que essa tarefa existe? Que problema resolve?
 
-**3. Critérios de Aceitação:**
-Como você vai saber que a tarefa está completa? Liste checkboxes.
-
-**4. Informações Técnicas (se aplicável):**
-Onde no código isso vai? Que arquivos serão afetados? Há alguma consideração especial?
-
-**5. Labels Apropriados:**
+**3. Labels Apropriados:**
 Para categorizar e filtrar. Exemplos: `backend`, `frontend`, `bug`, `enhancement`, `documentation`, `priority-high`
 
 ### Template de Issue Sugerido
@@ -121,22 +112,9 @@ Esta issue depende de #XX estar completa
 [Qualquer informação extra útil]
 ```
 
-### Como Criar e Atribuir Issues
-
-**Quem cria issues?**
-- Product Owner cria a maioria baseado no backlog
-- Qualquer membro da equipe pode criar se identificar uma necessidade/bug
-- Durante o Planning, a equipe pode discutir e criar issues juntos
-
-**Como atribuir:**
-1. Na página da Issue, clicar em "Assignees" do lado direito
-2. Selecionar a pessoa responsável
-3. Uma pessoa pode se auto-atribuir se a issue está desassignada
-4. Evitar ter a mesma pessoa assigned a mais de 3 issues abertas simultaneamente
-
-**Ciclo de vida de uma issue:**
+### **Ciclo de vida de uma issue:**
 1. Criada (status: Open)
-2. Alguém é designado
+2. Alguém é assigned
 3. Pessoa cria branch e começa a trabalhar
 4. Pessoa abre Pull Request (PR) mencionando a issue (escrever "Closes #XX" no PR)
 5. PR é revisado e mergeado
@@ -147,18 +125,6 @@ Esta issue depende de #XX estar completa
 ## 📊 GitHub Projects (Kanban Board)
 
 GitHub Projects permite criar quadros visuais estilo Trello dentro do GitHub.
-
-### Como Configurar
-
-1. Ir em "Projects" no repositório
-2. Criar novo projeto: "Biblioteca FATEC - Development Board"
-3. Escolher template "Board" (colunas)
-4. Criar colunas:
-   - **Backlog**: Issues identificadas mas não priorizadas ainda
-   - **To Do**: Planejado para a sprint atual
-   - **In Progress**: Alguém está trabalhando nisso agora
-   - **In Review**: Pull Request aberto, esperando aprovação
-   - **Done**: Completado e mergeado
 
 ### Como Usar
 
@@ -195,7 +161,7 @@ Branches são "linhas paralelas de desenvolvimento". Permitem que múltiplas pes
 - Pode ter bugs temporários, mas deve ser funcional no geral
 - Base para criar novas feature branches
 
-**feature/*** (branches de funcionalidade):**
+**feature/*** (branches de funcionalidade):
 - Uma branch para cada feature ou issue
 - Nomeação: `feature/login-endpoint`, `feature/book-card-component`, `feature/user-profile-page`
 - Criada a partir de `develop`
@@ -207,7 +173,7 @@ Branches são "linhas paralelas de desenvolvimento". Permitem que múltiplas pes
 - Criada a partir de `main`
 - Mergeada de volta para `main` e `develop`
 
-### Workflow Passo a Passo
+### Passo a Passo das branchs
 
 **Scenario: Você vai implementar o endpoint de login**
 
@@ -258,7 +224,7 @@ git branch -d feature/login-endpoint  # Deletar branch local
 
 Um Pull Request é uma proposta de mudança. Você está dizendo "Ei pessoal, fiz essas mudanças na minha branch. Revisem e, se estiver bom, façam merge no develop".
 
-### Anatomia de um Bom Pull Request
+### Anatomia de Pull Request
 
 **1. Título Descritivo:**
 Use o mesmo padrão de commits:
@@ -298,61 +264,14 @@ Closes #23 [número da issue que este PR resolve]
 - [ ] README atualizado se necessário
 ```
 
-**3. Reviewers Atribuídos:**
-Escolher quem vai revisar. Sugestão:
-- PRs de backend: Tech Lead ou Backend Lead revisa
-- PRs de frontend: Frontend Lead ou UI/UX Designer revisa
-- PRs de banco: Database Lead revisa
-- Em dúvida: Tech Lead
-
-**4. Labels e Milestone:**
-Adicionar labels apropriados (`backend`, `frontend`, etc) e atribuir ao milestone corrente (ex: Milestone 2 - PoC)
-
 ### Processo de Code Review
 **Checklist de revisão:**
 - [ ] O código faz o que a issue pede?
 - [ ] O código está claro e legível? (Outro desenvolvedor entenderia?)
-- [ ] Há testes? (Quando implementarem testes)
-- [ ] Não quebra nada existente?
+- [ ] Você testou e funcinou mesmo? Não quebra nada existente?
 - [ ] Segue os padrões do projeto? (Nomeação, estrutura de pastas, etc)
 - [ ] Sem código comentado ou console.logs esquecidos?
 - [ ] Sem segredos (senhas, chaves de API) no código?
-
-**Como dar feedback:**
-- Seja construtivo, não crítico
-- Pergunte em vez de afirmar: "Poderia explicar por que fez X?" em vez de "Isso está errado"
-- Sugira alternativas: "E se fizéssemos Y ao invés de X?"
-- Elogie coisas boas: "Gostei de como você estruturou isso, ficou bem claro"
-
-**Tipos de comentário:**
-- 🔴 **Blocking (must fix):** Erro crítico que precisa ser corrigido antes de merge
-  - Exemplo: "Este endpoint não valida o email, qualquer string passa. Precisa adicionar validação"
-- 🟡 **Non-blocking (nice to have):** Sugestão de melhoria mas não bloqueia merge
-  - Exemplo: "Este método poderia ser dividido em dois para ficar mais claro, mas funciona assim também"
-- 💬 **Question/Discussion:** Pergunta para entender melhor
-  - Exemplo: "Por que escolheu usar ArrayList aqui em vez de HashSet?"
-
-**Para quem recebeu review:**
-- Não leve para o pessoal - o feedback é sobre o código, não sobre você
-- Responda perguntas/comentários explicando seu raciocínio
-- Faça as correções solicitadas e dê push
-- Marque como "resolved" comentários que você atendeu
-- Agradeça o reviewer pelo tempo
-
-### Merging
-
-Após aprovação (normalmente 1-2 approvals), o autor do PR ou o reviewer pode fazer merge:
-
-**Estratégia de Merge:**
-- **Squash and Merge**: Junta todos os commits da branch em um único commit no develop
-  - Vantagem: Histórico limpo (cada feature = 1 commit)
-  - Desvantagem: Perde histórico detalhado de commits
-  - **Recomendado para vocês**
-
-**Após merge:**
-- GitHub pode automaticamente fechar a issue linkada
-- Branch feature é deletada automaticamente (configurar isso)
-- Todos devem dar `git pull origin develop` para pegar as mudanças
 
 ---
 
@@ -415,42 +334,10 @@ Para evitar que alguém acidentalmente quebre a branch principal, configurar pro
    - ✅ Restrict who can push to matching branches
      - Apenas DevOps ou Tech Lead pode forçar push em emergências
 
-### Para a branch `develop`:
-
-1. Mesmas configurações mas mais relaxado
-2. Require apenas 1 approval
-3. Qualquer membro pode merge
 
 ---
 
-## 📈 Milestones e Planejamento
-
-Milestones representam fases/marcos do projeto. Usem para agrupar issues.
-
-### Como Criar
-
-1. Ir em Issues → Milestones → New milestone
-2. Título: "Milestone 2: PoC"
-3. Descrição: Breve resumo do que esse milestone entrega
-4. Data de entrega: Data planejada de conclusão
-5. Criar
-
-### Durante Planning
-
-1. Olhar backlog de issues
-2. Decidir quais entram na próxima sprint
-3. Atribuir essas issues ao milestone corrente
-4. Atribuir responsáveis
-
-### Acompanhamento
-
-- GitHub mostra progresso do milestone (X% completo baseado em issues fechadas)
-- Permite ver se estão no ritmo para cumprir a data
-- Ajuda a identificar se pegaram trabalho demais
-
----
-
-## 🤖 GitHub Actions (Opcional mas Recomendado)
+## 🤖 GitHub Actions (Opcional)
 
 GitHub Actions permite automatizar tarefas. Mesmo que seja simples, adiciona bastante profissionalismo.
 
@@ -608,3 +495,4 @@ Se configuraram GitHub Actions, mostrar: "Todo PR automaticamente roda testes. V
 **Documento criado:** 19/02/2026
 **Última atualização:** 21/02/2026
 **Responsável por manter:** DevOps Lead
+
