@@ -90,21 +90,33 @@ Entregar a fundação do banco de dados do Palácio Mental no Oracle: modelo con
 ```
 database/
 ├── migrations/
-│   ├── V001__create_table_usuario.sql
-│   ├── V002__create_table_categoria.sql
-│   ├── V003__create_table_tag.sql
-│   ├── V004__create_table_projeto.sql
-│   ├── V005__create_table_comentario.sql
-│   ├── V006__create_table_midia.sql
-│   ├── V007__create_table_projeto_tag.sql
-│   ├── V008__create_table_curtida.sql
-│   ├── V009__create_table_salvo.sql
-│   └── V010__create_indexes.sql
+│   ├── sequences/
+│   │   └── V001__sequences.sql
+│   ├── tables/
+│   │   ├── V010__create_usuario.sql
+│   │   └── ... (demais tabelas)
+│   └── triggers/
+│       └── V020__triggers.sql
+├── plsql/  
+│   ├── functions/
+│   │   └── fn_contar_curtidas.sql
+│   ├── procedures/
+│   │   └── prc_processar_rascunhos.sql
+│   └── packages/
+│       ├── pkg_projeto_spec.sql    ← especificação (interface pública)
+│       └── pkg_projeto_body.sql    ← corpo (implementação)
+├── queries/
+│   ├── joins_feed.sql
+│   ├── joins_perfil.sql
+│   └── subconsultas.sql
 ├── seeds/
-│   └── seed_data.sql
-└── diagrams/
+│   ├── seed_categorias.sql
+│   ├── seed_tags.sql
+│   └── seed_dev.sql
+└── docs/
     ├── modelo_conceitual.png
-    └── modelo_logico.png
+    ├── modelo_logico.png
+    └── dicionario_de_dados.md
 ```
 
 ---
@@ -122,11 +134,10 @@ Esta fase entrega a fundação. As próximas fases constroem em cima:
 ## ✅ Checklist de conclusão
 
 - [X] Modelo conceitual (DER) criado e validado
-- [] Modelo lógico (tabelas + FKs + tipos) definido
+- [X] Modelo lógico (tabelas + FKs + tipos) definido
 - [X] Regras de negócio documentadas
 - [x] Documentação ABNT — rascunho entregue
 - [ ] Scripts DDL Oracle escritos e testados
 - [ ] Constraints e índices aplicados e validados
 - [ ] Dados de seed inseridos
 - [ ] Documentação ABNT — versão final
-- [ ] Oracle XE rodando via Docker localmente
