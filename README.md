@@ -78,11 +78,36 @@ palacio-mental/
 │   ├── GUIA_GITHUB_GESTAO.md
 │   ├── MILESTONE_0_PLANEJAMENTO.md
 │   └── MILESTONE_1_FUNDACAO.md
-├── database/
-│   ├── migrations/       # Scripts DDL Oracle (CREATE TABLE, constraints)
-│   ├── seeds/            # Dados de exemplo para desenvolvimento
-│   └── diagrams/         # Modelos conceitual, lógico e físico
-├── backend/              # Stack a definir (fase 2)
+database/
+├── migrations/
+│   ├── sequences/
+│   │   └── V001__sequences.sql
+│   ├── tables/
+│   │   ├── V010__create_usuario.sql
+│   │   └── ... (demais tabelas)
+│   └── triggers/
+│       └── V020__triggers.sql
+├── plsql/
+│   ├── functions/
+│   │   └── fn_contar_curtidas.sql
+│   ├── procedures/
+│   │   └── prc_processar_rascunhos.sql
+│   └── packages/
+│       ├── pkg_projeto_spec.sql    ← especificação (interface pública)
+│       └── pkg_projeto_body.sql    ← corpo (implementação)
+├── queries/
+│   ├── joins_feed.sql
+│   ├── joins_perfil.sql
+│   └── subconsultas.sql
+├── seeds/
+│   ├── seed_categorias.sql
+│   ├── seed_tags.sql
+│   └── seed_dev.sql
+└── docs/
+    ├── modelo_conceitual.png
+    ├── modelo_logico.png
+    └── dicionario_de_dados.md
+├── backend/
 ├── frontend/             # Stacke a definir (fase 3)
 └── .github/
     ├── ISSUE_TEMPLATE/
