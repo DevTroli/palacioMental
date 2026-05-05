@@ -6,12 +6,6 @@
 --   PROJETO_TAG, CURTIDA, SALVO
 -- =============================================================
 
-
--- -------------------------------------------------------------
--- SEQUENCES — uma por tabela, evita colisão de IDs entre tabelas
--- (o DDL gerado usava GlobalSequence única, problema explicado
---  na seção de alterações ao final do arquivo)
--- -------------------------------------------------------------
 CREATE SEQUENCE sq_tag       START WITH 1 INCREMENT BY 1 NOCACHE NOCYCLE;
 CREATE SEQUENCE sq_usuario   START WITH 1 INCREMENT BY 1 NOCACHE NOCYCLE;
 CREATE SEQUENCE sq_categoria START WITH 1 INCREMENT BY 1 NOCACHE NOCYCLE;
@@ -19,10 +13,6 @@ CREATE SEQUENCE sq_projeto   START WITH 1 INCREMENT BY 1 NOCACHE NOCYCLE;
 CREATE SEQUENCE sq_midia     START WITH 1 INCREMENT BY 1 NOCACHE NOCYCLE;
 CREATE SEQUENCE sq_comentario START WITH 1 INCREMENT BY 1 NOCACHE NOCYCLE;
 
-
--- -------------------------------------------------------------
--- TAG
--- -------------------------------------------------------------
 CREATE TABLE TAG (
   id_tag   INTEGER      NOT NULL,
   nm_tag   VARCHAR2(50) NOT NULL,
@@ -39,9 +29,6 @@ END;
 /
 
 
--- -------------------------------------------------------------
--- USUARIO
--- -------------------------------------------------------------
 CREATE TABLE USUARIO (
   id_usuario         INTEGER        NOT NULL,
   nm_usuario         VARCHAR2(50)   NOT NULL,
@@ -66,9 +53,6 @@ END;
 /
 
 
--- -------------------------------------------------------------
--- CATEGORIA
--- -------------------------------------------------------------
 CREATE TABLE CATEGORIA (
   id_categoria INTEGER      NOT NULL,
   nm_categoria VARCHAR2(50) NOT NULL,
@@ -85,9 +69,6 @@ END;
 /
 
 
--- -------------------------------------------------------------
--- PROJETO
--- -------------------------------------------------------------
 CREATE TABLE PROJETO (
   id_projeto         INTEGER        NOT NULL,
   id_usuario         INTEGER        NOT NULL,
@@ -124,9 +105,6 @@ END;
 /
 
 
--- -------------------------------------------------------------
--- MIDIA
--- -------------------------------------------------------------
 CREATE TABLE MIDIA (
   id_midia    INTEGER        NOT NULL,
   id_projeto  INTEGER        NOT NULL,
@@ -150,9 +128,6 @@ END;
 /
 
 
--- -------------------------------------------------------------
--- COMENTARIO
--- -------------------------------------------------------------
 CREATE TABLE COMENTARIO (
   id_comentario INTEGER        NOT NULL,
   id_usuario    INTEGER        NOT NULL,
@@ -177,9 +152,6 @@ END;
 /
 
 
--- -------------------------------------------------------------
--- PROJETO_TAG  (associativa N:M — PK composta, sem sequence)
--- -------------------------------------------------------------
 CREATE TABLE PROJETO_TAG (
   id_projeto INTEGER NOT NULL,
   id_tag     INTEGER NOT NULL,
@@ -191,10 +163,6 @@ CREATE TABLE PROJETO_TAG (
 CREATE INDEX idx_ptag_projeto ON PROJETO_TAG (id_projeto);
 CREATE INDEX idx_ptag_tag     ON PROJETO_TAG (id_tag);
 
-
--- -------------------------------------------------------------
--- CURTIDA  (associativa com atributo dt_criacao — PK composta)
--- -------------------------------------------------------------
 CREATE TABLE CURTIDA (
   id_projeto  INTEGER NOT NULL,
   id_usuario  INTEGER NOT NULL,
@@ -208,9 +176,6 @@ CREATE INDEX idx_curtida_projeto ON CURTIDA (id_projeto);
 CREATE INDEX idx_curtida_usuario ON CURTIDA (id_usuario);
 
 
--- -------------------------------------------------------------
--- SALVO  (associativa com atributo dt_criacao — PK composta)
--- -------------------------------------------------------------
 CREATE TABLE SALVO (
   id_usuario  INTEGER NOT NULL,
   id_projeto  INTEGER NOT NULL,
@@ -222,8 +187,3 @@ CREATE TABLE SALVO (
 
 CREATE INDEX idx_salvo_usuario ON SALVO (id_usuario);
 CREATE INDEX idx_salvo_projeto ON SALVO (id_projeto);
-
-
--- =============================================================
--- FIM DO DDL
--- =============================================================
