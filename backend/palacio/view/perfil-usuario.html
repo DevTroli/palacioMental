@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Palácio Mental - Meu Perfil</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --bg-principal: #FAFAFC;
+            --branco: #FFFFFF;
+            --roxo-principal: #6D28D9;
+            --roxo-hover: #5B21B6;
+            --roxo-claro: #F5F3FF;
+            --texto-escuro: #1E293B;
+            --texto-mutado: #64748B;
+            --borda: #E2E8F0;
+            
+            /* Cores das Tags do Dashboard */
+            --tag-andamento: #6D28D9;
+            --tag-andamento-bg: #F5F3FF;
+            --tag-ideia: #F59E0B;
+            --tag-ideia-bg: #FFFBEB;
+            --tag-ativo: #10B981;
+            --tag-ativo-bg: #ECFDF5;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-principal);
+            color: var(--texto-escuro);
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* --- SIDEBAR (BARRA LATERAL) --- */
+        .sidebar {
+            width: 260px;
+            background-color: var(--branco);
+            border-right: 1px solid var(--borda);
+            padding: 32px 24px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 40px;
+        }
+
+        .main-logo {
+            width: 32px;
+            height: auto;
+        }
+
+        .logo-area h2 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--texto-escuro);
+            letter-spacing: -0.5px;
+        }
+
+        .nav-menu {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            flex-grow: 1;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            color: var(--texto-mutado);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 14px;
+            border-radius: 12px;
+            transition: all 0.2s;
+        }
+
+        .nav-item:hover, .nav-item.active {
+            background-color: var(--roxo-claro);
+            color: var(--roxo-principal);
+        }
+
+        .menu-title {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--texto-mutado);
+            letter-spacing: 1px;
+            margin: 24px 0 8px 16px;
+        }
+
+        /* --- CONTAINER PRINCIPAL --- */
+        .main-wrapper {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        /* NAVBAR SUPERIOR */
+        .top-navbar {
+            height: 80px;
+            background-color: var(--branco);
+            border-bottom: 1px solid var(--borda);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 40px;
+        }
+
+        .top-nav-links {
+            display: flex;
+            gap: 32px;
+        }
+
+        .top-nav-links a {
+            text-decoration: none;
+            color: var(--texto-mutado);
+            font-weight: 500;
+            font-size: 15px;
+            padding-bottom: 28px;
+            border-bottom: 2px solid transparent;
+        }
+
+        .top-nav-links a.active {
+            color: var(--roxo-principal);
+            border-bottom-color: var(--roxo-principal);
+        }
+
+        .search-container {
+            position: relative;
+            width: 320px;
+        }
+
+        .search-container input {
+            width: 100%;
+            padding: 10px 16px 10px 40px;
+            border: 1px solid var(--borda);
+            border-radius: 12px;
+            background-color: var(--bg-principal);
+            outline: none;
+            font-size: 14px;
+        }
+
+        .search-container i {
+            position: absolute;
+            left: 14px;
+            top: 13px;
+            color: var(--texto-mutado);
+        }
+
+        /* CONTEÚDO SCROLLÁVEL */
+        .content-body {
+            flex-grow: 1;
+            padding: 40px;
+            overflow-y: auto;
+        }
+
+        /* --- SEÇÃO DE PERFIL / EDITOR --- */
+        .profile-card {
+            background-color: var(--branco);
+            border: 1px solid var(--borda);
+            border-radius: 16px;
+            padding: 32px;
+            display: flex;
+            align-items: center;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .avatar-container {
+            position: relative;
+            width: 120px;
+            height: 120px;
+        }
+
+        .avatar-image {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid var(--roxo-claro);
+        }
+
+        .btn-change-photo {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 36px;
+            height: 36px;
+            background-color: var(--roxo-principal);
+            border-radius: 50%;
+            border: 3px solid var(--branco);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--branco);
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .btn-change-photo:hover {
+            transform: scale(1.1);
+        }
+
+        .profile-inputs {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .input-editable {
+            border: 1px solid transparent;
+            background: transparent;
+            font-family: 'Poppins', sans-serif;
+            color: var(--texto-escuro);
+            outline: none;
+            padding: 4px 8px;
+            border-radius: 8px;
+            transition: all 0.2s;
+            width: 100%;
+        }
+
+        .input-editable:focus {
+            border-color: var(--roxo-principal);
+            background: var(--bg-principal);
+        }
+
+        .input-name {
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .input-bio {
+            font-family: 'Inter', sans-serif;
+            font-size: 15px;
+            color: var(--texto-mutado);
+        }
+
+        .badge-pro {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background-color: var(--roxo-claro);
+            color: var(--roxo-principal);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            width: fit-content;
+            margin-top: 4px;
+        }
+
+        .btn-save-profile {
+            padding: 12px 24px;
+            background-color: var(--roxo-principal);
+            color: var(--branco);
+            border: none;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .btn-save-profile:hover {
+            background-color: var(--roxo-hover);
+        }
+
+        /* --- SEÇÃO DOS PROJETOS --- */
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 24px;
+        }
+
+        .section-header h2 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 24px;
+        }
+
+        .project-card {
+            background-color: var(--branco);
+            border: 1px solid var(--borda);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .project-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px rgba(0,0,0,0.04);
+        }
+
+        .card-banner {
+            position: relative;
+            height: 180px;
+            background-color: #DDD;
+        }
+
+        .card-banner img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .status-tag {
+            position: absolute;
+            top: 16px;
+            left: 16px;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .status-tag.andamento { background-color: var(--tag-andamento-bg); color: var(--tag-andamento); }
+        .status-tag.ideia { background-color: var(--tag-ideia-bg); color: var(--tag-ideia); }
+        .status-tag.ativo { background-color: var(--tag-ativo-bg); color: var(--tag-ativo); }
+
+        .card-content {
+            padding: 20px;
+        }
+
+        .card-content h3 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .card-content p {
+            font-size: 13px;
+            color: var(--texto-mutado);
+            line-height: 1.5;
+            margin-bottom: 16px;
+        }
+
+        .card-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-top: 1px solid var(--borda);
+            padding-top: 14px;
+        }
+
+        .team-avatars {
+            display: flex;
+            align-items: center;
+        }
+
+        .team-avatars img {
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            border: 2px solid var(--branco);
+            margin-right: -8px;
+        }
+
+        .team-count {
+            font-size: 12px;
+            color: var(--texto-mutado);
+            margin-left: 14px;
+        }
+
+        .comments-count {
+            font-size: 13px;
+            color: var(--texto-mutado);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+    </style>
+</head>
+<body>
+
+    <aside class="sidebar">
+        <div>
+            <div class="logo-area">
+                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABAAAAAMACAYAAAC6j6BFAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH6gYVDCYTDjK8eQAAAB1pVFh0Q29tbwv... (Conteúdo Base64)" alt="Logo" class="main-logo">
+                <h2>PALÁCIO MENTAL</h2>
+            </div>
+            
+            <nav class="nav-menu">
+                <a href="#" class="nav-item"><i class="fa-solid fa-house"></i> Home</a>
+                <a href="#" class="nav-item"><i class="fa-solid fa-bolt"></i> Atividade</a>
+                <a href="#" class="nav-item"><i class="fa-solid fa-comment"></i> Mensagens</a>
+                <a href="#" class="nav-item"><i class="fa-solid fa-bell"></i> Notificações</a>
+                <a href="#" class="nav-item"><i class="fa-solid fa-bookmark"></i> Salvos</a>
+                
+                <div class="menu-title">Espaços</div>
+                <a href="#" class="nav-item"><i class="fa-solid fa-palette" style="color: #3B82F6"></i> Design & UX</a>
+                <a href="#" class="nav-item"><i class="fa-solid fa-video" style="color: #EF4444"></i> Filmes & Vídeos</a>
+                <a href="#" class="nav-item"><i class="fa-solid fa-music" style="color: #10B981"></i> Música & Áudio</a>
+            </nav>
+        </div>
+    </aside>
+
+    <div class="main-wrapper">
+        
+        <header class="top-navbar">
+            <div class="top-nav-links">
+                <a href="#">Início</a>
+                <a href="#">Explorar</a>
+                <a href="#" class="active">Projetos</a>
+                <a href="#">Pessoas</a>
+                <a href="#">Comunidades</a>
+            </div>
+            <div class="search-container">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" placeholder="Buscar projetos, pessoas, tags...">
+            </div>
+        </header>
+
+        <main class="content-body">
+            
+            <section class="profile-card">
+                <div class="avatar-container">
+                    <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=150" alt="Foto de Perfil" class="avatar-image" id="profileImage">
+                    <label class="btn-change-photo" for="fileInput">
+                        <i class="fa-solid fa-pen" style="font-size: 12px;"></i>
+                    </label>
+                    <input type="file" id="fileInput" style="display: none;" accept="image/*" onchange="previewImage(event)">
+                </div>
+
+                <div class="profile-inputs">
+                    <input type="text" class="input-editable input-name" id="userName" value="Ana Silva" placeholder="Seu Nome">
+                    <input type="text" class="input-editable input-bio" id="userBio" value="Arquiteta de Ideias | Especialista em UX/UI e Roteiros Criativos" placeholder="Sua bio ou cargo">
+                    <div class="badge-pro">
+                        <i class="fa-solid fa-crown"></i> Membro Pro
+                    </div>
+                </div>
+
+                <button class="btn-save-profile" onclick="saveProfile()"><i class="fa-solid fa-floppy-disk"></i> Salvar Perfil</button>
+            </section>
+
+            <section>
+                <div class="section-header">
+                    <h2>Meus Projetos Criados</h2>
+                </div>
+
+                <div class="projects-grid">
+                    
+                    <article class="project-card">
+                        <div class="card-banner">
+                            <span class="status-tag andamento">Em andamento</span>
+                            <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80&w=400" alt="Nebulosa">
+                        </div>
+                        <div class="card-content">
+                            <h3>Nebulosa</h3>
+                            <p>Curta-metragem de ficção científica explorando conexões neurais interplanetárias.</p>
+                            <div class="card-footer">
+                                <div class="team-avatars">
+                                    <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=50" alt="User">
+                                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=50" alt="User">
+                                    <span class="team-count">+5</span>
+                                </div>
+                                <span class="comments-count"><i class="fa-regular fa-comment"></i> 12</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="project-card">
+                        <div class="card-banner">
+                            <span class="status-tag ideia">Ideia</span>
+                            <img src="https://images.unsplash.com/photo-1614850523459-c2f4c699c52e?auto=format&fit=crop&q=80&w=400" alt="Livro Ilustrado">
+                        </div>
+                        <div class="card-content">
+                            <h3>Livro Ilustrado</h3>
+                            <p>Aventuras de uma inteligência artificial sonhadora descobrindo a natureza.</p>
+                            <div class="card-footer">
+                                <div class="team-avatars">
+                                    <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=50" alt="User">
+                                    <span class="team-count">+2</span>
+                                </div>
+                                <span class="comments-count"><i class="fa-regular fa-comment"></i> 8</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="project-card">
+                        <div class="card-banner">
+                            <span class="status-tag ativo">Ativo</span>
+                            <img src="https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&q=80&w=400" alt="EcoHabit">
+                        </div>
+                        <div class="card-content">
+                            <h3>EcoHabit</h3>
+                            <p>Aplicativo gamificado para construção e fixação de hábitos sustentáveis diários.</p>
+                            <div class="card-footer">
+                                <div class="team-avatars">
+                                    <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=50" alt="User">
+                                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=50" alt="User">
+                                    <span class="team-count">+7</span>
+                                </div>
+                                <span class="comments-count"><i class="fa-regular fa-comment"></i> 15</span>
+                            </div>
+                        </div>
+                    </article>
+
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        // Função para carregar o preview da foto ao fazer upload
+        function previewImage(event) {
+            const reader = new FileReader();
+            reader.onload = function(){
+                const output = document.getElementById('profileImage');
+                output.src = reader.result;
+            }
+            reader.readAsDataURL(event.target.files[0]);
+        }
+
+        // Função de salvamento simulado
+        function saveProfile() {
+            const nome = document.getElementById('userName').value;
+            const bio = document.getElementById('userBio').value;
+            
+            // Simulação de retorno da API
+            alert(`Perfil de ${nome} atualizado com sucesso no Palácio Mental!`);
+        }
+    </script>
+</body>
+</html>

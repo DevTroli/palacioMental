@@ -1,0 +1,61 @@
+/* Estilização para a página de Meus Projetos */
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 24px;
+    padding: 40px;
+}
+
+.project-card {
+    background: #ffffff;
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 20px;
+    transition: transform 0.2s;
+}
+
+.project-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+}
+
+.badge {
+    display: inline-block !important;
+    position: static !important;
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    margin-bottom: 12px;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+.badge-orange { background: #fff7ed; color: #ea580c; border: 1px solid #f97316; }
+.badge-green { background: #f0fdf4; color: #16a34a; border: 1px solid #22c55e; }
+.badge-purple { background: #f5f3ff; color: #7c3aed; border: 1px solid #7c3aed; }
+
+.project-card h3 {
+    margin-bottom: 10px;
+    color: var(--text-dark);
+}
+
+.project-card p {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    margin-bottom: 20px;
+}
+
+.btn-edit {
+    padding: 8px 16px;
+    border-radius: 8px;
+    border: 1px solid var(--primary-purple);
+    background: transparent;
+    color: var(--primary-purple);
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.btn-edit:hover {
+    background: var(--primary-purple);
+    color: #ffffff;
+}
