@@ -3,7 +3,7 @@ CREATE TABLE PROJETO (
   id_usuario         INTEGER        NOT NULL,
   id_categoria       INTEGER        NOT NULL,
   nm_projeto         VARCHAR2(100)  NOT NULL,
-  ds_projeto         VARCHAR2(255),
+  ds_projeto         VARCHAR2(4000),
   st_projeto         VARCHAR2(16)   DEFAULT 'rascunho' NOT NULL,
   dt_criacao         DATE           DEFAULT SYSDATE    NOT NULL,
   dt_atualizacao     DATE           DEFAULT SYSDATE    NOT NULL,
