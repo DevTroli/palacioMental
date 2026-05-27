@@ -1,58 +1,182 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Palácio Mental — Backend
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+API e interface web do Palácio Mental, construída com **Laravel 13** + **Breeze** (Blade) + **Tailwind CSS** + **Alpine.js** + **Livewire v3**.
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Requisitos
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+| Dependência | Versão |
+|---|---|
+| PHP | 8.2+ |
+| Composer | 2.x |
+| Node.js | 18+ |
+| npm | 9+ |
+| MariaDB / MySQL | 10.11+ / 8+ |
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+---
 
-## Learning Laravel
-
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
-
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
-
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
-
-## Agentic Development
-
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+## Setup Rápido
 
 ```bash
-composer require laravel/boost --dev
-
-php artisan boost:install
+composer install
+npm install
+cp .env.example .env
+php artisan key:generate
+# Configure DB_* no .env
+php artisan migrate:fresh --seed
+php artisan serve
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+Acesse **http://localhost:8000**
 
-## Contributing
+Para compilar assets em tempo real:
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+```bash
+npm run dev
+```
 
-## Code of Conduct
+---
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+## Arquitetura
 
-## Security Vulnerabilities
+### Estrutura de Diretórios
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+```
+app/
+├── Http/
+│   ├── Controllers/       ← Lógica das rotas
+│   │   ├── ComentarioController.php
+│   │   ├── CurtidaController.php
+│   │   ├── FeedController.php
+│   │   ├── PerfilController.php
+│   │   ├── ProjetoController.php
+│   │   └── SalvoController.php
+│   └── Requests/           ← Validação de formulários
+│       ├── StoreProjetoRequest.php
+│       └── UpdateProjetoRequest.php
+├── Models/                 ← Eloquent ORM
+│   ├── Categoria.php
+│   ├── Comentario.php
+│   ├── Midia.php
+│   ├── Projeto.php
+│   ├── Tag.php
+│   └── User.php
+database/
+├── migrations/             ← 11 migrations versionadas
+└── seeders/                ← Dados demo (15 projetos, 6 users)
+resources/
+├── views/                  ← Blade templates
+│   ├── feed/index.blade.php
+│   ├── projetos/
+│   │   ├── index.blade.php
+│   │   ├── create.blade.php
+│   │   ├── edit.blade.php
+│   │   └── show.blade.php
+│   └── perfil/show.blade.php
+└── css/app.css             ← Tailwind + classes customizadas
+routes/
+└── web.php                 ← Rotas públicas e autenticadas
+```
 
-## License
+### Rotas
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+| Método | URI | Nome | Auth |
+|---|---|---|---|
+| GET | `/` | feed | Não |
+| GET | `/projetos` | projetos.index | Não |
+| GET | `/projetos/{projeto}` | projetos.show | Não |
+| GET | `/u/{username}` | perfil.show | Não |
+| GET | `/projetos/create` | projetos.create | Sim |
+| POST | `/projetos` | projetos.store | Sim |
+| GET | `/projetos/{projeto}/edit` | projetos.edit | Sim |
+| PUT | `/projetos/{projeto}` | projetos.update | Sim |
+| DELETE | `/projetos/{projeto}` | projetos.destroy | Sim |
+| POST | `/projetos/{projeto}/curtir` | curtidas.toggle | Sim |
+| POST | `/projetos/{projeto}/salvar` | salvos.toggle | Sim |
+| POST | `/projetos/{projeto}/comentarios` | comentarios.store | Sim |
+
+### Modelos e Relacionamentos
+
+```
+User ──< Projeto >── Categoria
+  │        │
+  │        ├──< Comentario
+  │        ├──< Midia
+  │        ├──<> Tag (projeto_tag)
+  │        ├──<> User (curtidas)
+  │        └──<> User (salvos)
+  │
+  └──< Comentario
+```
+
+- `<>` = belongsToMany (N:M via pivot table)
+- Curtidas e Salvos são pivot tables puras (sem model próprio — acessadas via `belongsToMany`)
+
+---
+
+## Design System
+
+### Paleta de Cores
+
+| Token | Hex | Uso |
+|---|---|---|
+| `palacio-verde` | `#1B5A40` | CTAs, destaques, accent |
+| `palacio-roxo` | `#382554` | Títulos, nav, badges |
+| `palacio-bege` | `#F4ECE3` | Background, cards |
+| `palacio-laranja` | `#E8A849` | Alertas, hover |
+| `palacio-escuro` | `#0F2E1F` | Texto, footer |
+| `palacio-claro` | `#FAF7F2` | Inputs, fundo de página |
+
+### Tipografia
+
+- **Títulos:** Cinzel + Playfair Display (serif — estética greco-romana)
+- **Corpo:** System default sans-serif
+
+### Classes Utilitárias (app.css)
+
+- `.btn-primary` — Botão verde principal
+- `.btn-secondary` — Botão roxo
+- `.btn-outline` — Botão outline verde
+- `.card` — Card com borda bege e shadow
+- `.chip` — Tag/badge bege com texto roxo
+- `.chip-active` — Tag/badge roxo com texto bege
+
+---
+
+## Seeders
+
+Executar com dados demo:
+
+```bash
+php artisan migrate:fresh --seed
+```
+
+Ordem de execução (DatabaseSeeder):
+
+1. `CategoriaSeeder` — 5 categorias (Web, Mobile, IA, IoT, Games)
+2. `TagSeeder` — 15 tags (php, laravel, oracle, mysql, docker, python, javascript, react, figma, arduino, unity, tensorflow, api, mvc, banco-de-dados)
+3. `UserSeeder` — 6 membros da equipe
+4. `ProjetoSeeder` — 15 projetos acadêmicos (11 públicos, 2 rascunhos, 1 privado)
+5. `MidiaSeeder` — 1-2 mídias por projeto público
+6. `ComentarioSeeder` — 2-3 comentários por projeto público
+7. `CurtidaSalvoSeeder` — curtidas e salvos aleatórios
+
+---
+
+## Comandos Úteis
+
+```bash
+# Migrations
+php artisan migrate              # Roda migrations pendentes
+php artisan migrate:fresh --seed # Reseta DB e roda tudo
+
+# Servidor
+php artisan serve                # http://localhost:8000
+npm run dev                      # Hot reload Tailwind/JS
+
+# Limpar cache
+php artisan view:clear
+php artisan cache:clear
+php artisan config:clear
+```
