@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('midias', function (Blueprint $table) {
             $table->id();
             $table->foreignId('projeto_id')->constrained()->cascadeOnDelete();
-            $table->enum('tipo', ['imagem', 'video', 'audio', 'link']);
+            $table->string('tipo', 20);
             $table->string('url', 600);
             $table->timestamps();
         });

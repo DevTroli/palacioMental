@@ -39,7 +39,7 @@
                                             {{ strtoupper($projeto->user->name[0]) }}
                                         </div>
                                     @endif
-                                    <span class="text-xs text-palacio-escuro/60">{{ $projeto->user->name }}</span>
+                                    <span class="text-xs text-palacio-escuro/60">{{ '@' . $projeto->user->username }}</span>
                                 </div>
                                 @if($projeto->categoria)
                                     <span class="text-[10px] bg-palacio-verde/10 text-palacio-verde px-2 py-0.5 rounded-full font-medium">

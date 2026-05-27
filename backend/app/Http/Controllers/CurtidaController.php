@@ -7,11 +7,6 @@ use Illuminate\Http\Request;
 
 class CurtidaController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
     public function toggle(Request $request, Projeto $projeto)
     {
         $user = auth()->user();

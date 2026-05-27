@@ -19,6 +19,7 @@ export default {
         palacio: {
           verde: '#1B5A40',
           roxo: '#382554',
+                    roxoescuro: '#1E1235',
           bege: '#F4ECE3',
           laranja: '#E8A849',
           escuro: '#0F2E1F',

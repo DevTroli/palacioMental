@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreignId('categoria_id')->nullable()->constrained()->nullOnDelete();
             $table->string('titulo', 200);
             $table->longText('descricao')->nullable();
-            $table->enum('status', ['rascunho', 'publico', 'privado'])->default('rascunho');
+            $table->string('status', 20)->default('rascunho');
             $table->timestamps();
         });
     }

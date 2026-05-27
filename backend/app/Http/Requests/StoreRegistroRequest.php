@@ -5,8 +5,9 @@ namespace App\Http\Requests;
 use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use Illuminate\Validation\Rules\Password;
 
-class ProfileUpdateRequest extends FormRequest
+class StoreRegistroRequest extends FormRequest
 {
     public function authorize(): bool
     {
@@ -17,15 +18,9 @@ class ProfileUpdateRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string', 'min:2', 'max:255'],
-            'username' => ['required', 'string', 'min:3', 'max:30', 'alpha_dash:ascii', Rule::unique(User::class)->ignore($this->user()->id)],
-            'email' => [
-                'required',
-                'string',
-                'lowercase',
-                'email',
-                'max:255',
-                Rule::unique(User::class)->ignore($this->user()->id),
-            ],
+            'username' => ['required', 'string', 'min:3', 'max:30', 'alpha_dash:ascii', Rule::unique(User::class)],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', Rule::unique(User::class)],
+            'password' => ['required', 'confirmed', Password::defaults()],
         ];
     }
 
@@ -46,7 +41,14 @@ class ProfileUpdateRequest extends FormRequest
             'email.email' => 'Digite um email válido (ex: seuemail@exemplo.com).',
             'email.lowercase' => 'Use apenas letras minúsculas no email.',
             'email.max' => 'O email pode ter no máximo :max caracteres.',
-            'email.unique' => 'Esse email já está cadastrado por outra conta.',
+            'email.unique' => 'Esse email já está cadastrado. Faça login ou use outro email.',
+
+            'password.required' => 'A senha é obrigatória.',
+            'password.confirmed' => 'As senhas não coincidem. Digite a mesma senha nos dois campos.',
+            'password.min' => 'A senha precisa ter pelo menos :min caracteres.',
+            'password.mixed' => 'A senha precisa ter pelo menos uma letra maiúscula e uma minúscula.',
+            'password.symbols' => 'A senha precisa ter pelo menos um caractere especial (ex: !@#$%).',
+            'password.numbers' => 'A senha precisa ter pelo menos um número.',
         ];
     }
 
@@ -56,6 +58,8 @@ class ProfileUpdateRequest extends FormRequest
             'name' => 'nome',
             'username' => 'username',
             'email' => 'email',
+            'password' => 'senha',
+            'password_confirmation' => 'confirmar senha',
         ];
     }
 }

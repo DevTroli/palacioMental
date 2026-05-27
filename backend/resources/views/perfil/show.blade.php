@@ -15,7 +15,7 @@
                 <div class="flex-1 text-center sm:text-left">
                     <h1 class="font-serif text-2xl text-palacio-roxo">{{ $user->name }}</h1>
                     @if($user->username)
-                        <p class="text-sm text-palacio-escuro/50">@{{ $user->username }}</p>
+                    <p class="text-sm text-palacio-escuro/50">{{ '@' . $user->username }}</p>
                     @endif
                     @if($user->bio)
                         <p class="text-sm text-palacio-escuro/70 mt-2">{{ $user->bio }}</p>

@@ -7,8 +7,8 @@
                 @php
                     $statusColors = [
                         'rascunho' => 'bg-gray-200 text-gray-700',
-                        'publico'  => 'bg-palacio-verde/10 text-palacio-verde',
-                        'privado'  => 'bg-palacio-roxo/10 text-palacio-roxo',
+                        'publico' => 'bg-palacio-verde/10 text-palacio-verde',
+                        'privado' => 'bg-palacio-roxo/10 text-palacio-roxo',
                     ];
                 @endphp
                 <span class="text-xs font-medium px-2.5 py-1 rounded-full {{ $statusColors[$projeto->status] ?? '' }}">
@@ -28,8 +28,7 @@
                             {{ strtoupper($projeto->user->name[0]) }}
                         </div>
                     @endif
-                    <span class="text-sm font-medium text-palacio-escuro/80">{{ $projeto->user->name }}</span>
-                    <span class="text-xs text-palacio-escuro/50">@{{ $projeto->user->username }}</span>
+                    <span class="text-sm font-medium text-palacio-escuro/70">{{ '@' . $projeto->user->username }}</span>
                 </a>
                 <span class="text-palacio-escuro/30">&middot;</span>
                 <span class="text-xs text-palacio-escuro/50">{{ $projeto->created_at->format('d M Y') }}</span>
@@ -82,7 +81,7 @@
                             @if($isYoutube)
                                 <div class="rounded-lg overflow-hidden border border-palacio-bege/60 aspect-video">
                                     <iframe src="https://www.youtube.com/embed/{{ $matches[1] }}"
-                                            class="w-full h-full" frameborder="0" allowfullscreen></iframe>
+                                        class="w-full h-full" frameborder="0" allowfullscreen></iframe>
                                 </div>
                             @else
                                 <a href="{{ $midia->url }}" target="_blank" rel="noopener"
@@ -173,8 +172,8 @@
                             Adicionar comentário
                         </label>
                         <textarea name="conteudo" rows="3"
-                                  class="w-full rounded-lg border border-palacio-bege bg-white p-3 text-sm focus:border-palacio-verde focus:ring-palacio-verde"
-                                  placeholder="Escreva seu comentário...">{{ old('conteudo') }}</textarea>
+                            class="w-full rounded-lg border border-palacio-bege bg-white p-3 text-sm focus:border-palacio-verde focus:ring-palacio-verde"
+                            placeholder="Escreva seu comentário...">{{ old('conteudo') }}</textarea>
                         @error('conteudo')
                             <p class="text-xs text-red-500 mt-1">{{ $message }}</p>
                         @enderror

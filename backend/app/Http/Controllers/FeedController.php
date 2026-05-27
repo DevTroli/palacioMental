@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Categoria;
 use App\Models\Projeto;
+use App\Models\Tag;
 use Illuminate\Http\Request;
 
 class FeedController extends Controller
@@ -27,7 +28,8 @@ class FeedController extends Controller
 
         $projetos = $query->latest()->paginate(12);
         $categorias = Categoria::orderBy('nome')->get();
+        $tags = Tag::orderBy('nome')->get();
 
-        return view('feed.index', compact('projetos', 'categorias'));
+        return view('feed.index', compact('projetos', 'categorias', 'tags'));
     }
 }

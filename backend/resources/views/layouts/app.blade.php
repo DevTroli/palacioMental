@@ -7,6 +7,10 @@
 
     <title>{{ config('app.name', 'Palácio Mental') }}</title>
 
+    <link rel="icon" type="image/png" sizes="192x192" href="https://servidor-estaticos-ashy.vercel.app/v2/palaciomental/palaciomental.png" onerror="this.onerror=null;this.href='/palaciomental.png';">
+    <link rel="icon" type="image/png" sizes="128x128" href="/palaciomental.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="https://servidor-estaticos-ashy.vercel.app/v2/palaciomental/palaciomental.png">
+
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&family=cinzel:400,500,600,700&family=playfair-display:400,500,600,700&display=swap" rel="stylesheet" />
