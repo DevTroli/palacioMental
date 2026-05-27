@@ -1,1 +1,0 @@
-A stack por enquanto se deu em PHP com Laravel para fazer as apis do projeto e interaçao client -> server
