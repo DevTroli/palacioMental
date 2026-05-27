@@ -1,2 +1,0 @@
-
-A stack do BackEnd sera em PHP com Laravel usando OPP ainda mais pq tera que fazer um PDO com um oracle database que se deu como a stack de banco de dados do projeto
